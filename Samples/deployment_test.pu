@@ -1,0 +1,99 @@
+@startuml deployment_test
+'uncomment the next line to change direction
+'left to right direction
+
+'each component may be defined simple or complex, including various separators
+cloud Internet [
+    Internet is a generic term for various
+    --
+    network-based services
+    ==
+    inluding many well known examples
+]
+cloud Torrent
+cloud Steam
+cloud Facebook
+cloud TikTok
+cloud "Linux Repositories" as Repositories
+cloud AppleStore
+cloud YouTube
+'different ways to change line thickness
+Internet .. Torrent
+Internet -[dashed]- Steam
+Internet ~~ Facebook
+Internet -[dotted]- TikTok
+Repositories = Internet
+Internet -[bold] AppleStore
+Internet -- YouTube
+
+'some components may be nested
+node "User PC" as PC {
+    folder "File system" as FS {
+        folder Python {
+            package libcom {
+                file libcom.py
+                file "archive.zip" {
+                    component "version1.0"
+                    artifact "version0.1"
+                }
+            }
+        }
+    }
+    component Client
+    Client -[hidden]- FS
+    component "Web browser" as Browser
+    'add relation via interface and description
+    Facebook <-(0)-> Browser : browsing
+    component Transmission
+    Browser -[hidden]- Transmission
+    frame "Some process" as Process {
+        queue Queue
+        stack Stack
+        card Card
+        agent Agent
+        boundary Boundary
+        storage Storage
+        circle Circle
+        rectangle Rectangle
+        entity Entity
+        control Control
+        usecase Usecase
+    }
+    FS -[hidden]- Process
+}
+
+'add hidden link
+
+Torrent -[hidden]- PC
+
+'add some interface
+
+interface "BitTorrent"
+
+'make ling longer and with one-sided interface
+Torrent ---( BitTorrent
+'use explicit direction
+BitTorrent )-right- Transmission
+
+node "Local Server" as LServer {
+    component API
+    database DB {
+        frame "Schema public" {
+            collections data
+        }
+        frame "Schema backup" {
+            collections "data" as odata
+        }
+    }
+    DB <-right-> API
+}
+
+interface smb
+
+API -- smb
+smb -- Client
+
+actor User
+
+PC <==  User : Uses
+@enduml

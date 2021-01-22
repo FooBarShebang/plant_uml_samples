@@ -1,0 +1,34 @@
+@startuml salt_basic_test
+
+@startsalt
+{+
+' add borders around frame
+    'add menu
+    {* File | Edit | About }
+    ' add horizontal tabs, let Process be selected
+    {/ <b>Process</b> | Logs | Errors}
+    ' add elements - simple group
+    {+
+        {
+            ' label with a sprite and an edit box
+            {Login       <&person> | "Whoever   "} | .
+            {Password<&key> | "****      " } | .
+            ' add a disabled button, e.g. all personal data must be filled-in
+            [Cancel <&circle-x>] | [<color:grey>OK <&account-login>]
+        }
+        'add a separator: .., --,~~ or ==
+        ~~
+        'add a group box
+        {^"Personal info"
+            'some radio buttons
+            Gender: | {() Male | (X) Female | () Undefined}
+            'some checkboxes
+            Qualifications: | {[X] Driver licence | [] Gun permit}
+            'drop-down list
+            Country of origin: | ^United States of America ^
+        }
+    }
+}
+@endsalt
+
+@enduml

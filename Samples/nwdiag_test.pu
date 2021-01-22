@@ -1,0 +1,66 @@
+@startuml nwdiag_test
+'decorations
+header Last updated 2021-01-20
+footer For internal use only
+title Our fictional network
+'let magic begin!
+nwdiag {
+    ' change shape, default is rectangle
+    internet [shape = cloud];
+    internet -- router;
+
+    ' add network as the internet access
+    network proxy {
+        'make the bus propagate the full width, otherwise it will end
+        'just after the guest devices
+        width = full
+        router;
+        'add fixed IP-address (external side)
+        vpn [address = "201.174.143.100"]
+        'create a group of nodes - users' PC
+        group {
+            'set its colour
+            color = "pink";
+            PC1;
+            PC2;
+        }
+        'guest devices - long name
+        guest [description = "guest devices"]
+    }
+
+    ' add internal file-sharing network
+    network smb {
+        ' add the range of IP-addresses
+        address = "192.168.100.x/8";
+        router;
+        'add fixed IP-address (internal side)
+        vpn [address = "192.168.100.101"]
+        PC1;
+        PC2;
+        'add a group of devices available only within it
+        group {
+            color = "green";
+            'add fixed IP-addresses and sprites (x4 magnification!)
+            db [address = "192.168.100.100", shape = database, description = "<&spreadsheet*4>\ndatabase"];
+            ptr  [address = "192.168.100.102",  description = "<&print*4>\nCanon\nMFR"];
+        }
+    }
+
+    ' add a third network - phones
+    network VoIP {
+        router;
+        group {
+            color = "blue";
+            phone1;
+            phone2;
+        }
+    }
+}
+
+'more decorations
+legend
+Probably, this diagram is far from truth.
+end legend
+
+caption No pun intended
+@enduml

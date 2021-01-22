@@ -1,0 +1,34 @@
+@startuml mindmap_orgmode_test
+
+@startmindmap
+* Project WBS
+' change color and add sprite
+**[#Green] <&wrench>Implementation
+' remove box
+***_ Coding
+***_ Unittesting
+***_ Debugging
+** <&check>Verification
+' long text
+***:Internal usability test
+performed by the alpha-
+testers team;
+***:End-to-end testing
+involving the customer;
+**[#pink] <&key>Release
+
+' change direction
+left side
+
+**[#SkyBlue] <&person>Customer's survey
+*** Functional requirements
+*** Interface requirements
+** <&cog>Design phase
+***[#red] Platform / architecture
+**** API design
+**** Container design
+*** GUI design
+*** Network exchange protocol
+@endmindmap
+
+@enduml

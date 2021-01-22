@@ -1,0 +1,124 @@
+@startuml classes_test
+' uncomment the next line to change direction
+'left to right direction
+
+' a class entry is automatically created the first time an identier is encountered
+' with help of the keywords implements and extends the links can be created
+' automatically, as well as the 'type' of the participants automatically defined
+
+class Subclass1 extends Baseclass1
+class Subclass1 implements CommonInterface
+
+' the class members can be added afterwards
+' you can also use visibility and abstract / static modifiers
+
+Baseclass1 : - {static} PrivateStaticField
+Baseclass1 : # ProtectedField
+Baseclass1 : ~ PackagePrivateField
+Baseclass1 : + PublicField
+Baseclass1 : Field_wo_Modifiers
+'field definition containg () is automatically considered to be a method
+Baseclass1 : + PrintMethod()
+
+CommonInterface : + {abstract} PackMethod()
+
+Subclass1 : + PackMethod()
+'use {field} modifier to circumvent this auto-feature
+Subclass1 : - {field} NumbersList : list(str)
+
+' you can also define the fields within the class definition
+' add add stereotype and / or generics
+
+class Subclass2 <? extends Baseclass2> <<Rich features>> {
+    - CalibrationDate : Date
+    - ProductionDate : Date
+    - State : enum States
+    + PackMethod()
+}
+
+'and define the relations explicitily, which can contain labels
+
+CommonInterface <|.. Subclass2 : implements
+
+' you can also use the 'built-in' class types, as interface, abstract, enum, etc.
+
+abstract Baseclass2 {
+    + GetState()
+    + GetDates()
+}
+
+Baseclass2 <|-- Subclass2 : extends
+
+enum States {
+    CALIBRATED
+    NOT_CALIBRATED
+    DISCONTINUED
+}
+
+States --* Subclass2 : composition
+
+'or create your own spot using stereotypes
+
+class Date <<(D,red) Date Struct>> {
+    Year
+    Month
+    Day
+}
+
+'and add specific labels on any side of a relation
+
+Subclass2 "0..2" o- Date : association
+
+'there other styles of 'arrows' as well, check documentation
+
+'the namespaces can be created automatically
+
+class library1.WorkerClass {
+    + UnPackMethod()
+}
+
+Subclass1 <|-- library1.WorkerClass
+
+'or manually
+
+namespace library2 {
+    ' where you can define new classes
+    class Customer {
+        FirstName : str
+        LastName : str
+        Address : str
+        Customer_id : int
+    }
+    
+    class Book {
+        Title : str
+        Author_id : int
+    }
+    
+    'for which you can add relation and association class
+    
+    Customer "0..*" - "1..*" Book
+    
+    class Survey {
+        + book_taken()
+        + book_returned()
+    }
+    
+    (Customer, Book) .. Survey
+    
+    'you can also define relation between the specific members
+    
+    class Author {
+        Id : int
+        FirstName : str
+        LastName : str
+    }
+    
+    Book::Author_id - Author::Id
+}
+
+'just make prettier
+
+Subclass2 -[hidden]- library2.Customer
+
+@enduml

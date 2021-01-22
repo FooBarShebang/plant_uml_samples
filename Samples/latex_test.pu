@@ -1,0 +1,6 @@
+@startlatex
+
+' See https://plantuml.com/ascii-math
+
+\sum_{i=0}^{n-1} (a_i + b_i^2)
+@endlatex

@@ -1,0 +1,79 @@
+@startuml activity_test
+'you can use swimlanes for spliting the activity,
+' i.e. by actor or process / logic; and add colours (optional)
+|#lightgray|User_Interface|
+' entry point is optional!.
+start
+:Boot-up;
+'and use connectors to create more complex flow
+(A)
+detach
+(A)
+
+' you can create grouping / partition as well
+partition "Log in" {
+    ' dirty trick to create multiple inputs
+    split
+        -[hidden]->
+        :Enter user's\ncredentials<
+    split again
+        -[hidden]->
+        'end change the color of the node
+        #pink:Enter S/N<
+    end split
+}
+'add switch to second swimlane
+|Initialization|
+'and change the colour and style of transition arrow as well as
+'add label (text) to the lines, if you do not like the standard on
+-[#black,bold]-> <color:red>switching lanes;
+'you can create explicit concurrency - forking
+fork
+'and use different styles of the nodes
+:Start-up\ndetector 1]
+fork again
+:Start-up\ndetector 2|
+end fork
+'and swim back and split the process
+|User_Interface|
+split
+    :Hanging;
+    'you can detach a branch from further flow, or 'kill'
+    detach
+split again
+    :Exiting;
+    end
+split again
+    'and make repeat...while loop
+    repeat
+        :Check for input;
+        'and even add a conditional break
+        if (Exception occured?) equals (<color:blue>True) then
+            break
+        endif
+    repeat while (input received?) is (No)
+end split
+
+'and use multiple choice as well as different syntax
+' or simply 'if (condition?) then (result)'
+if (Exception occured?) is (<color:red>Yes) then
+    'explicit stopping
+    stop
+elseif (User wants to exit?) then (<color:blue>True)
+    end
+else (No)
+    :do measurements/
+    'switch lanes
+    |Measurement|
+    'while loop
+    while (for N = 0; N < 5, N++) is (N < 5)
+        :acquire data\\
+    endwhile (N == 5)
+    'switch lanes
+    |User_Interface|
+    :Print results>
+endif
+'and exit!
+stop
+
+@enduml

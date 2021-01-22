@@ -1,0 +1,24 @@
+@startuml wbs_orgmode_test
+
+@startwbs
+* Project WBS
+' change color
+**[#SkyBlue] Customer's survey
+*** Functional requirements
+' change direction
+***< Interface requirements
+** Design phase
+***[#red] Platform / architecture
+**** API design
+**** Container design
+***< GUI design
+***< Network exchange protocol
+**[#Green] Implementation
+*** Coding
+*** Unittesting
+*** Debugging
+** Verification
+**[#pink] Release
+@endwbs
+
+@enduml

@@ -1,0 +1,57 @@
+@startuml usecases_test
+
+'uncomment the next line to change the direction
+'left to right direction
+
+actor Guest
+actor Critic
+'add hidden relation to organize nicely
+Critic -[hidden] Guest
+'group use cases (optional)
+rectangle Restaurant {
+    'another optioal grouping
+    package Consumption {
+        'complex use case definition with delimiters
+        usecase Eat as "Eat starter
+        ==
+        main course
+        --
+        desert
+        "
+        'simple use case
+        (Drink)
+        'define extention action (horizontal)
+        Eat <|- Drink
+        (Pay)
+        Drink <|- Pay
+    }
+    usecase Prepare as "Prepare food"
+    (Serve)
+    'addd vertical extention action
+    Eat --|> Serve
+    Serve -|> Prepare
+    'create group of participants
+    rectangle Staff {
+        actor Chef
+        actor Waiter
+    }
+}
+'define actor - use case relations (vertical)
+
+Guest -- Eat
+Guest -- Drink
+Guest -- Pay
+
+Critic -- Eat
+
+Serve -- Waiter
+Prepare -- Chef
+
+'add more use cases
+
+usecase Review as "Write review"
+
+'define horizontal relation
+Review - Critic
+
+@enduml

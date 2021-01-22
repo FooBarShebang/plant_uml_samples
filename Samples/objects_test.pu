@@ -1,0 +1,34 @@
+@startuml objects_test
+'uncomment the next line to change direction
+'left to right direction
+
+' you can define the usual relations between objects, like extension, composition, etc.
+object String
+object John
+object Doe
+
+String <|-- John
+String <|-- Doe
+'use aliases for long names
+'you can define values of the fields in the declaration
+object "John Doe" as JD {
+    FirstName = "John"
+}
+'or outside the declaration
+
+JD : LastName = "Doe"
+
+John --* JD
+Doe "1" --* "1" JD
+
+'but the 'killer feature' is associative arrays / maps
+'which can contain direct values or links to other objects as values
+
+map "map Function -> Employee" as functions {
+    General manager => Stuart Little
+    Research manager *-> JD
+    Sales manager => Rosa Frankenstein
+    Janitor *-> JD
+}
+
+@enduml

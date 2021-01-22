@@ -1,0 +1,21 @@
+@startuml json_test
+
+@startjson
+{
+    "int" : -123,
+    "float" : 0.2234,
+    "string" : "abcd",
+    "True" : true,
+    "array" : [1,2,3, []],
+    "False" : false,
+    "Null" : null,
+    "dict" : {
+        "a" : 1,
+        "b" : 2.34E-3,
+        "c" : {},
+        "d" : [1, 2, true, {"a" : "b"}]
+    }
+}
+@endjson
+
+@enduml

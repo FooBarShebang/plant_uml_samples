@@ -1,0 +1,65 @@
+@startuml components_test
+'uncomment the next line to change direction
+'left to right direction
+
+'different grouping of components
+cloud Internet {
+    'different ways of defining components
+    [Wikipedia]
+    [YouTube] as YT
+    component Facebook
+    component [Our Site] as Site
+    'add hidden relations to organize components
+    'using directions
+    Wikipedia -[hidden] YT
+    YT -[hidden]- Site
+    Wikipedia -[hidden]- Facebook
+}
+
+'define interface (implicitely) and add direction
+Site -right- HTTP
+
+node "User PC" as PC {
+    [Web browser] as WB
+    folder Downloads {
+        [User files] as UF
+    }
+    'add arrows
+    WB --> UF
+    [PGAdmin]
+    UF <-- PGAdmin
+}
+
+HTTP -right- WB
+
+node Server {
+    package Cockies {
+        [Settings]
+    }
+    [WebAPI]
+    Settings <- WebAPI
+    database PG {
+        frame "Schema public" {
+            [Actual Data] as AD
+        }
+        frame Backup {
+            [Backups]
+        }
+        Backups <.left. AD
+    }
+    PG <-up- WebAPI
+    [pgcl]
+    PG <-- pgcl
+}
+
+HTTP -down- WebAPI
+
+'complex interface definition
+
+() "SQL over\nSSH tunnel" as SSH
+
+pgcl -right- SSH
+
+PGAdmin -- SSH
+
+@enduml

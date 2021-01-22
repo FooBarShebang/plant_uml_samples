@@ -1,0 +1,46 @@
+@startuml yaml_test
+
+' See https://en.wikipedia.org/wiki/YAML
+' and https://plantuml.com/yaml
+
+@startyaml
+receipt:     Oz-Ware Purchase Invoice
+date:        2012-08-06
+pi: 3.14159
+xmas: true
+customer:
+    first_name:   Dorothy
+    family_name:  Gale
+items:
+    - part_no:   A4786
+      descrip:   Water Bucket (Filled)
+      price:     1.47
+      quantity:  4
+
+    - part_no:   E1628
+      descrip:   High Heeled "Ruby" Slippers
+      size:      8
+      price:     133.7
+      quantity:  1
+bill-to:
+    street: 
+            123 Tornado Alley
+            Suite 16
+    city:   East Centerville
+    state:  KS
+peoples:
+    - {name: John Smith, age: 33}
+    - name: Mary Smith
+      age: 27
+    - [name, age]: [Rae Smith, 4]
+numbers: [1,2,3,4]
+
+# comment: Based on the example from https://en.wikipedia.org/wiki/YAML
+# without block literal delimiting (| and >) and anchors (& and *)
+# 'in-line' associative arrays and list are not supported (yet)
+# 2021-01-19, plantuml.jar v1.2021.0
+
+
+@endyaml
+
+@enduml

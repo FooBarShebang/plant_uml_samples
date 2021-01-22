@@ -1,0 +1,4 @@
+@startuml archimate_sprites_test
+'see https://plantuml.com/archimate-diagram
+listsprite
+@enduml

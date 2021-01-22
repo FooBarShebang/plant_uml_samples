@@ -1,0 +1,74 @@
+@startuml sequence_test
+
+' participants with non-standard (participant) icon or with a stereotype must be declared explicitely
+
+actor User
+'receive message from outside
+[-> User : do some work!
+'add separator
+== Log in ==
+'send message
+User -> Interface : login()
+'make participant active explicitely
+activate Interface
+'create a non-persistent participant
+create entity ssh <<tunnel>>
+Interface -> ssh : create()
+'add a stereotype as well!
+database DB <<PostgreSQL>>
+'short-hand for send signal and activate!
+Interface -> DB ++: check_credendials()
+'short hand for sending message back and deactivation
+return {code}
+'message to itself to indicate internal process
+Interface -> Interface : check response
+'branching (as in if.. else..)
+alt Authorization failed
+    Interface --> User : {failure}
+    'replay to outside
+    [<-- User : I can't!
+else Success!
+    Interface --> User : {success}
+    'short-hand to create a non-persistent participant
+    Interface -> cursor ** : create()
+    activate cursor
+    == Retrieve data ==
+    User -> Interface ++ : get_data(Parameters)
+    Interface -> DB ++ : <<query>>
+    DB -> cursor : {data}
+    'send message to another side of outside
+    cursor ->] : <<log message>>
+    DB --> Interface : {code}
+    'explicit deactivation
+    deactivate DB
+    alt Fail
+        Interface --> User : {failure}
+        [<-- User : I can't!
+    else Ok
+        Interface -> cursor : get_number_records()
+        cursor --> Interface : {N}
+        loop N times
+            Interface -> cursor : get_record()
+            cursor --> Interface : {data}
+            Interface -> Interface : check data
+            opt Some wrong data
+                break
+                    Interface --> User : {failure}
+                    [<-- User : I can't!
+                end
+            end
+        end
+    end
+    return {all records}
+    [<-- User : Here you are!
+end
+== Log out ==
+User -> Interface : exit()
+'implicit destruction (+ deactivation) of target
+Interface -> cursor !!: close()
+'implicit deactivation of source
+Interface -> ssh -- : close()
+'explicit destruction
+destroy ssh
+
+@enduml

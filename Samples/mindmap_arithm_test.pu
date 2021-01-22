@@ -1,0 +1,28 @@
+@startuml mindmap_arithm_test
+
+@startmindmap
++ Project WBS
+' change color and add sprite
+++[#Green] <&wrench>Implementation
+' remove box
++++_ Coding
++++_ Unittesting
++++_ Debugging
+++ <&check>Verification
+' multi-line formatted text not supported directly, use newlines!
++++ Internal usability test\nperformed by the alpha-\ntesters team
++++ End-to-end testing\ninvolving the customer
++++[#pink] <&key>Release
+' change direction
+--[#SkyBlue] <&person>Customer's survey
+--- Functional requirements
+--- Interface requirements
+-- <&cog>Design phase
+---[#red] Platform / architecture
+---- API design
+---- Container design
+--- GUI design
+--- Network exchange protocol
+@endmindmap
+
+@enduml

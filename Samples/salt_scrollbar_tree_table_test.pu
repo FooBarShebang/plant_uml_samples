@@ -1,0 +1,93 @@
+@startuml salt_scrollbar_tree_table_test
+@startsalt
+{+
+' + creates an edge around
+    {SI
+    ' simple tree within a vertically scrolled list
+        {T
+            +World
+            ++ Europe
+            +++ France
+            +++ UK
+            +++ Netherlands
+            ++ Americas
+            +++ USA 
+            +++ Canada
+            +++ Mexico
+        }
+    } | {S-
+    ' multi-column tree within a horizontally scrolled list
+        {T
+            +World | Language | Currency
+            ++ Europe  | . | .
+            +++ France  | French | EUR
+            +++ UK  | English | GBP
+            +++ Netherlands  | Dutch | EUR
+            ++ Americas | . | .
+            +++ USA | English | USD
+            +++ Canada |English, French | CAD
+            +++ Mexico | Spanish | PES
+        }
+    } | {S
+    ' multi-column tree with vertical separator within a double scrolled list
+        {T!
+            +World | Language | Currency
+            ++ Europe  | . | .
+            +++ France  | French | EUR
+            +++ UK  | English | GBP
+            +++ Netherlands  | Dutch | EUR
+            ++ Americas | . | .
+            +++ USA | English | USD
+            +++ Canada |English, French | CAD
+            +++ Mexico | Spanish | PES
+        }
+    }
+    'next row!
+    {T+
+    'multu-column tree within own box without separators
+            +World | Language | Currency
+            ++ Europe  | . | .
+            +++ France  | French | EUR
+            +++ UK  | English | GBP
+            +++ Netherlands  | Dutch | EUR
+            ++ Americas | . | .
+            +++ USA | English | USD
+            +++ Canada |English, French | CAD
+            +++ Mexico | Spanish | PES
+    } | {T#
+    'multu-column tree within own box with all separators
+            +World | Language | Currency
+            ++ Europe  | . | .
+            +++ France  | French | EUR
+            +++ UK  | English | GBP
+            +++ Netherlands  | Dutch | EUR
+            ++ Americas | . | .
+            +++ USA | English | USD
+            +++ Canada |English, French | CAD
+            +++ Mexico | Spanish | PES
+    } | {+
+        {T-
+    'multu-column tree with horizontal separators within external box
+            +World | Language | Currency
+            ++ Europe  | . | .
+            +++ France  | French | EUR
+            +++ UK  | English | GBP
+            +++ Netherlands  | Dutch | EUR
+            ++ Americas | . | .
+            +++ USA | English | USD
+            +++ Canada |English, French | CAD
+            +++ Mexico | Spanish | PES
+        }
+    }
+    'next row!, skip first columns, insert internal table spaning two columns
+    . | {#
+     here is | an example | of a table | to emulate | some spread sheet | application
+     . | the first column | * | was skipped | * | * | *
+     ' the last column above takes all awailable space!
+     you | . | can skip any number of columns | * | * | . 
+     or occupy as may columns as you need | * | * | * | * | .
+    }| *
+
+}
+@endsalt
+@enduml

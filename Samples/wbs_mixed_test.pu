@@ -1,0 +1,25 @@
+@startuml wbs_mixed_test
+
+@startwbs
+* Project WBS
+' change color
+**[#SkyBlue] Customer's survey
+*** Functional requirements
+' change direction
+--- Interface requirements
+ + Design phase
+  +[#red] Platform / architecture
+' removing boxes
+   +_ API design
+   +_ Container design
+  -_ GUI design
+  -_ Network exchange protocol
+ +[#Green] Implementation
+  +_ Coding
++++_ Unittesting
+  +_ Debugging
+++ Verification
+ +[#pink] Release
+@endwbs
+
+@enduml

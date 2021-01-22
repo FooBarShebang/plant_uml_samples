@@ -1,0 +1,88 @@
+@startuml gantt_test
+
+@startgantt
+'decorators
+title Sample Project's Gantt Chart Diagram
+header Last updated on 2021-03-17
+footer Created with PlantUML
+caption For internal use only
+legend
+Bla-bla-bla
+Foo Bar
+end legend
+
+' this line creates the calendar, otherwise jsut days count will be displayed
+Project starts 2021-01-19
+
+' indicating off-days
+saturday are closed
+sunday are closed
+' with an exception
+2021-01-31 is open
+' company vacation!
+2021-03-01 to 2021-03-07 are closed
+2021-03-01 to 2021-03-07 are colored in salmon
+2021-03-01 to 2021-03-07 are named [School vacations]
+
+' highlighting today
+
+today is 2021-03-17 and is colored in LightBlue
+
+' resource allocation, aliasing of a task and setting colour
+[project supervision] as [TASK0] on {John} lasts 50 days
+[TASK0] is colored in Lavender/LightBlue
+' set personal off-time
+{John} is off on 2021-02-01 to 2021-02-12
+
+' milestones
+' fixed date
+[Design acceptance] as [MS1] happens at 2021-02-24
+' relative dates
+[Implementation acceptance] as [MS2] happens 30 days after [MS1]'s end
+[Verification acceptance] as [MS3] happens 10 days after [MS2]'s end
+[Design transfer] as [MS3] happens 5 days before [TASK0]'s end
+[Product release] as [MS4] happens at [TASK0]'s end
+' placing tasks / milestones on the same line
+[MS2] displays on same row as [MS1]
+[MS3] displays on same row as [MS1]
+
+' separators
+--desing stage--
+' task without resource, but with a fixed start date and duration
+[Concept design] as [TASK1] lasts 7 days and is colored in blue
+' tasks chain using arrows, part-time resources allocation
+[GUI design] as [TASK1.1] on {Ivan:75%} lasts 5 days
+[firmware design] as [TASK1.2] on {Johan:50%} lasts 5 days
+[TASK1] -> [TASK1.1]
+[TASK1] -> [TASK1.2]
+' fixed start date and end date task
+[Communcation layer design] as [TASK2] on {Ian} starts on 2021-02-08 and ends on 2021-02-12 and is colored in blue
+[TASK2] displays on same row as [TASK1]
+' pause a project for a day
+[TASK2] pauses on 2021-02-10
+' maximum end of tasks as a start day, multiple resources
+[Design assemblage] as [TASK3] on {Ivan}{Johan}{Jan} lasts 2 days
+[TASK3] starts at [TASK1.1]'s end
+[TASK3] starts at [TASK1.2]'s end
+[TASK3] starts at [TASK2]'s end
+' task with relative start and end days, and offsets
+[Design validation] as [TASK4] starts 1 day after [TASK3]'s end and ends 1 day before [MS1]'s start
+--impementation stage--
+' task with completeness status
+[Coding] as [TASK5] on {Ivan:25%}{Johan:25%}{Ian:25%} starts at [MS1]'s end and ends 1 day before [MS2]'s start and is 75% complete
+[Write unittest] as [TASK5.1] starts at [TASK5]'s start and lasts 3 days and is 100% complete
+' simple tasks chaining
+then [Implement code] as [TASK5.2] lasts 8 days and is 75% complete
+then [Run unittest] as [TASK5.3] ends at [TASK5]'s end and is 0% complete
+--verfication phase--
+' task between milestones
+[Check implementation with beta-testers] occurs from [MS2] to [MS3] and is 0% complete
+' add note
+note bottom
+The internally unittested beta-version should be shipped
+to our partners for the usability testing.
+end note
+
+@endgantt
+
+@enduml

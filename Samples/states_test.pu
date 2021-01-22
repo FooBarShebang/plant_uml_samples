@@ -1,0 +1,98 @@
+@startuml states_test
+'uncomment the next line to change the direction
+'left to right direction
+
+'you can simplify view by hinding the empty state descriptions
+hide empty description
+
+'define the entry point (optional) as some initial state
+
+[*] -> Login
+
+'add description, if required
+
+Login : the user is required
+Login : to entre valid credentials
+
+'define transition to other state(s) and action / conditions
+Login --> Idling : Success
+
+'you can define a transition to the same state
+Login --> Login : credentials are \n rejected
+
+'the state can be composite and have internal entry point
+Idling --> Procedure : [evMeasure]
+
+state "Measurement procedure" as Procedure {
+    [*] --> Initialization
+    
+    'a composite state can be concurrent
+    Initialization -> Sampling
+    
+    state Sampling {
+        state "Detector 1 accumulates" as D1A
+        state "Detector 1 transfers" as D1T
+        D1A --> D1T
+        D1T --> D1A
+        'add concurrency, use -- to stack the states vertically
+        ||
+        state "Detector 2 accumulates" as D2A
+        state "Detector 2 transfers" as D2T
+        D2A --> D2T
+        D2T --> D2A
+    }
+    
+    'you can add expicit conditional choice as specific branching point using stereotypes
+    
+    state c <<choice>>
+    
+    Sampling --> c : Is there \n enough data?
+    c --> Sampling : No
+    c --> Finalization : Yes
+}
+
+'you can create multiple entry points for a state as well as exit point
+' check also <<inputPin>>, <<outputPin>>, <<expansionInput>> and <<expansionOutput>>
+state Reporting {
+    state entry1 <<entryPoint>>
+    state entry2 <<entryPoint>>
+    state "Logging to\n a file" as Log
+    entry1 --> Log
+    state "Printing\ndata" as Print
+    Log -> Print
+    entry2 --> Print
+    state exit1 <<exitPoint>>
+    Print -> exit1
+}
+
+Finalization --> entry1 : logging \n required
+Finalization --> entry2 : logging not \n required
+
+'you can also add a history [H] or deep history [H*] substate
+
+Sampling -> Pause : [evPause]
+Pause -> Procedure[H] : [evResume]
+
+Procedure --> Error : [evFailure]
+state "Reporting failure" as Error
+Error : something went wrong
+Error --> Idling
+'and an exit point with a very long arrow!
+Idling -------> [*] : [evExit]
+
+'and explicitforking / joining
+
+state fork <<fork>>
+exit1 --> fork
+fork --> State1
+fork --> State2
+state join <<join>>
+State1 --> join
+State2 --> join
+
+state "Finalizing and exiting" as Exit
+
+join -> Exit
+Exit -> [*]
+
+@enduml
